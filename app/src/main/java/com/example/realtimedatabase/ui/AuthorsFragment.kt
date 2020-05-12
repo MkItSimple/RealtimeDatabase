@@ -33,9 +33,14 @@ class AuthorsFragment : Fragment() {
         recycler_view_authors.adapter = adapter
 
         viewModel.fetchAuthors()
+        viewModel.getRealtimeUpdates()
 
         viewModel.authors.observe(viewLifecycleOwner, Observer {
             adapter.setAuthors(it)
+        })
+
+        viewModel.author.observe(viewLifecycleOwner, Observer {
+            adapter.addAuthor(it)
         })
 
 

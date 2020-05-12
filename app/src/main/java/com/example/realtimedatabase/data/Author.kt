@@ -15,7 +15,7 @@ data class Author(
     var isDeleted: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
-        return if (other is Author) {
+        return if (other is Author) {               // #4 9:00
             other.id == id
         } else false
     }
