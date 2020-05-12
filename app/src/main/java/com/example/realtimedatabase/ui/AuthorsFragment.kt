@@ -1,13 +1,12 @@
 package com.example.realtimedatabase.ui
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-
 import com.example.realtimedatabase.R
 import kotlinx.android.synthetic.main.fragment_authors.*
 
@@ -18,6 +17,7 @@ class AuthorsFragment : Fragment() {
     }
 
     private lateinit var viewModel: AuthorsViewModel
+    private val adapter = AuthorsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +29,14 @@ class AuthorsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AuthorsViewModel::class.java)
+
+        recycler_view_authors.adapter = adapter
+
+        viewModel.fetchAuthors()
+
+        viewModel.authors.observe(viewLifecycleOwner, Observer {
+            adapter.setAuthors(it)
+        })
 
 
         button_add.setOnClickListener {
